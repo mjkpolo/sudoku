@@ -2,7 +2,7 @@
 opencv and tesseract python sudoku solver
 
 Currently can find a puzzle on a page and warp the image to fit.
-Tesseract doesn't work with harder to read pictures such as warped pictures
+Tesseract doesn't work with harder to read pictures such as warped pictures (try with both sample images one will fail)
 Eventually will implement a neural net for text recognition
 
 ### Credit
