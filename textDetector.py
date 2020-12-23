@@ -14,7 +14,7 @@ img = cv2.cvtColor(img.copy(), cv2.COLOR_BGR2GRAY)
 img = cv2.GaussianBlur(img, (9, 9), 0)
 img = cv2.adaptiveThreshold(img, 255,
                             cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
-                            cv2.THRESH_BINARY, 3, 2)
+                            cv2.THRESH_BINARY, 11, 2)
 img = cv2.bitwise_not(img, img)
 cv2.imshow("Source", img)
 cv2.waitKey(0)
