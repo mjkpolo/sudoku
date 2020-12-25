@@ -129,7 +129,6 @@ def extractNums(img):
 # change image and see it fail!
 img = cv2.imread('sudoku.png', 0)
 displayImg(img)
-imgCopy = img.copy()
 
 # manipulate image
 img = preproc(img)
