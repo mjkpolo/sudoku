@@ -1,12 +1,9 @@
 # sudoku
 opencv and tesseract python sudoku solver
 
-Currently can find a puzzle on a page and warp the image to fit.
-Tesseract doesn't work with harder to read pictures such as warped pictures (try with both sample images one will fail)
-Eventually will implement a neural net for text recognition
+Take screenshot of website w sudoku. Only works with high quality images. Struggles with pictures from newspapers but feel free to try!
 
 ### Credit
-I took a good chunk of code from here:
-https://becominghuman.ai/sudoku-and-cell-extraction-sudokuai-opencv-38b603066066
+credit is in the code
 
-*tesseract must be downloaded on the machine to run this. In windows, please follow steps to bring the tesseract .exe in*
+*tesseract must be downloaded on the machine to run this*
