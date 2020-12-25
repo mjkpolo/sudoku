@@ -126,8 +126,8 @@ def extractNums(img):
 
 
 # Import Image 0 means grayscale
-# change image and see it fail!
-img = cv2.imread('sudoku.png', 0)
+# change image and see it fail with low res pictures!
+img = cv2.imread('webSudoku.png', 0)
 displayImg(img)
 
 # manipulate image
