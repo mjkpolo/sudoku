@@ -18,8 +18,7 @@ def displayImg(img):
 
 
 # Preprocessing
-# method ex cv2.ADAPTIVE_THRESH_MEAN_C
-def preproc(img, method):
+def preproc(img):
     img = cv2.GaussianBlur(img, (5, 5), 0)
     # first param is histogram which we don't need
     _, img = cv2.threshold(img, 0, 255,
@@ -125,7 +124,7 @@ displayImg(img)
 imgCopy = img.copy()
 
 # manipulate image
-img = preproc(img, cv2.ADAPTIVE_THRESH_GAUSSIAN_C)
+img = preproc(img)
 displayImg(img)
 
 img = warp(img, imgCopy)
