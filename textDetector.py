@@ -14,12 +14,12 @@ import sys
 # Display Image
 def displayImg(img):
     cv2.imshow("sudoku", img)
-    cv2.waitKey(0)
+    cv2.waitKey(1)
 
 
 # Preprocessing
 def preproc(img):
-    img = cv2.GaussianBlur(img, (5, 5), 0)
+    img = cv2.GaussianBlur(img, (3, 3), 0)
     # first param is histogram which we don't need
     _, img = cv2.threshold(img, 0, 255,
                            cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
@@ -106,14 +106,22 @@ def extractNums(img):
         for j in range(9):
             section = np.array(finalG[i][j])
             hSec, wSec = section.shape
-            tolerance = min(hSec, wSec)//8
+            tolerance = min(hSec, wSec)//6
             section = section[tolerance:hSec-tolerance,
                               tolerance:wSec-tolerance]
+            section = cv2.copyMakeBorder(section, tolerance, tolerance,
+                    tolerance, tolerance, cv2.BORDER_CONSTANT, value=0)
+
+            # TODO Manipulate image so it is more legible
+            # Inverts and blurs image once again
+            section = preproc(section)
             temp = pytesseract.image_to_boxes(section, config=cong)
             try:
                 matrix[i][j] = temp[0]
             except IndexError:
                 matrix[i][j] = 0
+            print(matrix[i][j])
+            displayImg(section)
     return matrix
 
 
@@ -127,7 +135,7 @@ imgCopy = img.copy()
 img = preproc(img)
 displayImg(img)
 
-img = warp(img, imgCopy)
+img = warp(img, img)
 displayImg(img)
 
 print(sw.sudoku(extractNums(img)))
