@@ -3,6 +3,8 @@ opencv and tesseract python sudoku solver
 
 ## Demo
 run ```python3 textDetector.py``` in the source folder
+
+
 Take screenshot of website w sudoku. Only works with high quality images.
 Struggles with pictures from newspapers but feel free to try! (sudokuPaper.jpg misses the 1 as a 4)
 
