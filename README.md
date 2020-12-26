@@ -1,6 +1,6 @@
 # sudoku
 opencv and tesseract python sudoku solver
-Searches for puzzle in a picture, warps to puzzle, slices image into squares, then runs image recongnition on each slice!
+*Searches for puzzle in a picture, warps to puzzle, slices image into squares, then runs image recongnition on each slice!*
 
 ## Demo
 run ```python3 textDetector.py``` in the source folder
