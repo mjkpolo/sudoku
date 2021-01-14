@@ -114,15 +114,19 @@ def extractNums(img):
 
             # TODO Manipulate image so it is more legible
             # Inverts and blurs image once again
+            # Saves back to finalG
             section = preproc(section)
-            temp = pytesseract.image_to_boxes(section, config=cong)
-            try:
-                matrix[i][j] = temp[0]
-            except IndexError:
-                matrix[i][j] = 0
-            print(matrix[i][j])
-            displayImg(section)
-    return matrix
+            finalG[i][j] = section 
+            displayImg(finalG)
+            return matrix
+#            temp = pytesseract.image_to_boxes(section, config=cong)
+#            try:
+#                matrix[i][j] = temp[0]
+#            except IndexError:
+#                matrix[i][j] = 0
+#            print(matrix[i][j])
+#            displayImg(section)
+#    return matrix
 
 
 # Import Image 0 means grayscale
