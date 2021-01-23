@@ -82,7 +82,12 @@ def warp(img, returnImg):
     return returnImg
 
 
-def extractNums(img):
+            
+
+
+
+
+def combine_images(img):
     # split the image into 81 squares
     hI, wI = img.shape
     hEdge = hI//9
@@ -97,10 +102,9 @@ def extractNums(img):
                         for k in range(len(rows))])
 
     finalG = []
-    for i in range(0, len(grid)-8, 9):
+    for i in range(0, len(grid) - 8, 9):
         finalG.append(grid[i:i+9])
 
-    cong = r'--psm 6 outputbase digits'
     matrix = np.zeros((9, 9))
     for i in range(9):
         for j in range(9):
@@ -111,22 +115,23 @@ def extractNums(img):
                               tolerance:wSec-tolerance]
             section = cv2.copyMakeBorder(section, tolerance, tolerance,
                     tolerance, tolerance, cv2.BORDER_CONSTANT, value=0)
-
-            # TODO Manipulate image so it is more legible
             # Inverts and blurs image once again
             # Saves back to finalG
             section = preproc(section)
             finalG[i][j] = section 
-            displayImg(finalG)
-            return matrix
-#            temp = pytesseract.image_to_boxes(section, config=cong)
-#            try:
-#                matrix[i][j] = temp[0]
-#            except IndexError:
-#                matrix[i][j] = 0
-#            print(matrix[i][j])
-#            displayImg(section)
-#    return matrix
+            displayImg(finalG[i][j])
+    return cv2.vconcat([cv2.hconcat(np.array(imgsH)) for imgsH in finalG])
+
+def extractNums(img):
+    cong = r'--psm 6 outputbase digits'
+    temp = pytesseract.image_to_boxes(img, config=cong)
+    print(temp)
+#    try:
+#        matrix[i][j] = temp[0]
+#    except IndexError:
+#        matrix[i][j] = 0
+#    print(matrix[i][j])
+#    displayImg(section)
 
 
 # Import Image 0 means grayscale
@@ -140,5 +145,5 @@ displayImg(img)
 
 img = warp(img, img)
 displayImg(img)
-
-print(sw.sudoku(extractNums(img)))
+img = combine_images(img)
+extractNums(img)
