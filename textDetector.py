@@ -5,7 +5,7 @@
 
 import pytesseract
 import cv2
-import sw
+# import sw
 import operator
 import numpy as np
 import sys
@@ -14,7 +14,7 @@ import sys
 # Display Image
 def displayImg(img):
     cv2.imshow("sudoku", img)
-    cv2.waitKey(1)
+    cv2.waitKey(0)
 
 
 # Preprocessing
@@ -81,12 +81,6 @@ def warp(img, returnImg):
     returnImg = cv2.warpPerspective(returnImg, m, (int(side), int(side)))
     return returnImg
 
-
-            
-
-
-
-
 def combine_images(img):
     # split the image into 81 squares
     hI, wI = img.shape
@@ -105,7 +99,6 @@ def combine_images(img):
     for i in range(0, len(grid) - 8, 9):
         finalG.append(grid[i:i+9])
 
-    matrix = np.zeros((9, 9))
     for i in range(9):
         for j in range(9):
             section = np.array(finalG[i][j])
@@ -119,31 +112,42 @@ def combine_images(img):
             # Saves back to finalG
             section = preproc(section)
             finalG[i][j] = section 
-            displayImg(finalG[i][j])
     return cv2.vconcat([cv2.hconcat(np.array(imgsH)) for imgsH in finalG])
 
+
 def extractNums(img):
+
+    matrix = np.zeros((9, 9))
+    numInOrder = []
+
     cong = r'--psm 6 outputbase digits'
-    temp = pytesseract.image_to_boxes(img, config=cong)
-    print(temp)
+    boxes = pytesseract.image_to_boxes(img, config=cong)
+    hI, wI = img.shape
+    for box in boxes.splitlines():
+        box = box.split(' ')
+        numInOrder.append((int(box[1]), int(box[2])))
+        x, y, w, h = int(box[1]), int(box[2]), int(box[3]), int(box[4])
+        cv2.rectangle(img, (x, hI-y), (w, hI-h), (0, 0, 0), 1)
 #    try:
 #        matrix[i][j] = temp[0]
 #    except IndexError:
 #        matrix[i][j] = 0
 #    print(matrix[i][j])
 #    displayImg(section)
+    print(numInOrder)
 
 
 # Import Image 0 means grayscale
 # change image and see it fail with low res pictures!
 img = cv2.imread('webSudoku.png', 0)
-displayImg(img)
+# displayImg(img)
 
 # manipulate image
 img = preproc(img)
-displayImg(img)
+# displayImg(img)
 
 img = warp(img, img)
-displayImg(img)
+# displayImg(img)
 img = combine_images(img)
 extractNums(img)
+displayImg(img)
